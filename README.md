@@ -1,7 +1,7 @@
 ```mermaid
 graph TD
     A[Portal do Professor] --> B(API Gateway)
-    ... (graph TD
+    ... graph TD
     subgraph "Frontend (Aplicação Web - ex: React, Angular, Vue.js)"
         A[Portal do Professor]
         B[Portal do Aluno]
@@ -76,5 +76,5 @@ graph TD
     style G fill:#f8cecc,stroke:#333,stroke-width:1px
     style H fill:#ffcc99,stroke:#333,stroke-width:2px
     style I fill:#ffcc99,stroke:#333,stroke-width:2px
-    style J fill:#dae8fc,stroke:#333,stroke-width:2px)
+    style J fill:#dae8fc,stroke:#333,stroke-width:2px
 ```
