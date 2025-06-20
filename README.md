@@ -1,1 +1,69 @@
-# Eng-de-Software
+mermaid
+graph TD
+    A[Portal do Professor] --> B(API Gateway)
+    graph TD
+    subgraph "Frontend (Aplicação Web - ex: React, Angular, Vue.js)"
+        A[Portal do Professor]
+        B[Portal do Aluno]
+    end
+    subgraph "Backend (API Gateway)"
+        C[Gateway de API]
+    end
+    subgraph "Microsserviços/Módulos do Backend"
+        D[Serviço de Autenticação]
+        E[Serviço de Upload e Processamento de Documentos]
+        F[Serviço de Geração de Simulados]
+        G[Serviço de Resposta e Avaliação]
+    end
+    subgraph "Google Cloud Platform (GCP)"
+        H[Cloud Storage Bucket<br>Armazenamento de Documentos]
+        I[API do Gemini<br>Modelo de Linguagem (ex: Gemini 1.5 Pro)]
+    end
+    subgraph "Banco de Dados"
+        J[Banco de Dados SQL/NoSQL<br>(ex: PostgreSQL, MongoDB)]
+    end
+    %% Conexões do Professor
+    A -- 1. Login/Cadastro --> C
+    A -- 2. Upload do Documento (PDF, DOCX) --> C
+    C -- Encaminha --> D[Verifica autenticação]
+    C -- 3. Encaminha Upload --> E
+    %% Fluxo de Criação do Simulado
+    E -- 4. Gera URL Pré-assinada --> H
+    A -- 4.1. Faz upload direto para --> H
+    H -- 5. Notifica via gatilho (ex: Cloud Function) --> E
+    E -- 6. Extrai o texto do documento --> E
+    E -- 7. Envia texto para --> F
+    F -- 8. Monta o Prompt para o Gemini --> I
+    I -- 9. Retorna Questões (JSON) --> F
+    F -- 10. Salva o Simulado (Questões, Matéria) --> J
+    %% Conexões do Aluno
+    B -- 11. Login/Acessa Simulado --> C
+    C -- Encaminha --> D
+    C -- 12. Pede Simulado --> F
+    F -- 13. Busca Simulado --> J
+    J -- 14. Retorna Simulado --> F
+    F -- 15. Envia Simulado para --> B
+    B -- 16. Aluno responde o simulado --> B
+    B -- 17. Envia Respostas --> C
+    C -- 18. Encaminha Respostas --> G
+    %% Fluxo de Avaliação Diagnóstica
+    G -- 19. Salva respostas do aluno --> J
+    G -- 20. Busca Questões e Respostas Corretas --> J
+    G -- 21. Compila dados de desempenho do aluno --> G
+    G -- 22. Monta o Prompt para Avaliação --> I
+    I -- 23. Retorna Avaliação Diagnóstica --> G
+    G -- 24. Salva Avaliação no Banco de Dados --> J
+    G -- 25. Disponibiliza Avaliação para --> B
+    A -- 26. Professor visualiza desempenho da turma --> C
+    C -- Encaminha --> G
+    G -- Busca e retorna dados consolidados --> J
+    style A fill:#cde4ff,stroke:#333,stroke-width:2px
+    style B fill:#cde4ff,stroke:#333,stroke-width:2px
+    style C fill:#d5e8d4,stroke:#333,stroke-width:2px
+    style D fill:#f8cecc,stroke:#333,stroke-width:1px
+    style E fill:#f8cecc,stroke:#333,stroke-width:1px
+    style F fill:#f8cecc,stroke:#333,stroke-width:1px
+    style G fill:#f8cecc,stroke:#333,stroke-width:1px
+    style H fill:#ffcc99,stroke:#333,stroke-width:2px
+    style I fill:#ffcc99,stroke:#333,stroke-width:2px
+    style J fill:#dae8fc,stroke:#333,stroke-width:2px
