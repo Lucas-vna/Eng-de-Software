@@ -1,7 +1,6 @@
 ```mermaid
 graph TD
     A[Portal do Professor] --> B(API Gateway)
-    ... graph TD
     subgraph "Frontend (Aplicação Web - ex: React, Angular, Vue.js)"
         A[Portal do Professor]
         B[Portal do Aluno]
