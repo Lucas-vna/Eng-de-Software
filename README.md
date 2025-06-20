@@ -1,4 +1,4 @@
-mermaid
+```mermaid
 graph TD
     A[Portal do Professor] --> B(API Gateway)
     subgraph "Frontend (Aplicação Web - ex: React, Angular, Vue.js)"
