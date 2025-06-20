@@ -1,32 +1,38 @@
-mermaid
+```mermaid
 graph TD
     A[Portal do Professor] --> B(API Gateway)
-    graph TD
+    ... (graph TD
     subgraph "Frontend (Aplicação Web - ex: React, Angular, Vue.js)"
         A[Portal do Professor]
         B[Portal do Aluno]
     end
+
     subgraph "Backend (API Gateway)"
         C[Gateway de API]
     end
+
     subgraph "Microsserviços/Módulos do Backend"
         D[Serviço de Autenticação]
         E[Serviço de Upload e Processamento de Documentos]
         F[Serviço de Geração de Simulados]
         G[Serviço de Resposta e Avaliação]
     end
+
     subgraph "Google Cloud Platform (GCP)"
         H[Cloud Storage Bucket<br>Armazenamento de Documentos]
         I[API do Gemini<br>Modelo de Linguagem (ex: Gemini 1.5 Pro)]
     end
+
     subgraph "Banco de Dados"
         J[Banco de Dados SQL/NoSQL<br>(ex: PostgreSQL, MongoDB)]
     end
+
     %% Conexões do Professor
     A -- 1. Login/Cadastro --> C
     A -- 2. Upload do Documento (PDF, DOCX) --> C
     C -- Encaminha --> D[Verifica autenticação]
     C -- 3. Encaminha Upload --> E
+
     %% Fluxo de Criação do Simulado
     E -- 4. Gera URL Pré-assinada --> H
     A -- 4.1. Faz upload direto para --> H
@@ -36,6 +42,7 @@ graph TD
     F -- 8. Monta o Prompt para o Gemini --> I
     I -- 9. Retorna Questões (JSON) --> F
     F -- 10. Salva o Simulado (Questões, Matéria) --> J
+
     %% Conexões do Aluno
     B -- 11. Login/Acessa Simulado --> C
     C -- Encaminha --> D
@@ -46,6 +53,7 @@ graph TD
     B -- 16. Aluno responde o simulado --> B
     B -- 17. Envia Respostas --> C
     C -- 18. Encaminha Respostas --> G
+
     %% Fluxo de Avaliação Diagnóstica
     G -- 19. Salva respostas do aluno --> J
     G -- 20. Busca Questões e Respostas Corretas --> J
@@ -57,6 +65,8 @@ graph TD
     A -- 26. Professor visualiza desempenho da turma --> C
     C -- Encaminha --> G
     G -- Busca e retorna dados consolidados --> J
+
+
     style A fill:#cde4ff,stroke:#333,stroke-width:2px
     style B fill:#cde4ff,stroke:#333,stroke-width:2px
     style C fill:#d5e8d4,stroke:#333,stroke-width:2px
@@ -66,4 +76,5 @@ graph TD
     style G fill:#f8cecc,stroke:#333,stroke-width:1px
     style H fill:#ffcc99,stroke:#333,stroke-width:2px
     style I fill:#ffcc99,stroke:#333,stroke-width:2px
-    style J fill:#dae8fc,stroke:#333,stroke-width:2px
+    style J fill:#dae8fc,stroke:#333,stroke-width:2px)
+```
