@@ -19,11 +19,11 @@ graph TD
 
     subgraph "Google Cloud Platform (GCP)"
         H[Cloud Storage Bucket<br>Armazenamento de Documentos]
-        I[API do Gemini<br>Modelo de Linguagem (ex: Gemini 1.5 Pro)]
+        I[API do Gemini<br>Modelo de Linguagem]
     end
 
     subgraph "Banco de Dados"
-        J[Banco de Dados SQL/NoSQL<br>(ex: PostgreSQL, MongoDB)]
+        J[Banco de Dados SQL/NoSQL<br>]
     end
 
     %% Conexões do Professor
